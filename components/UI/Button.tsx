@@ -8,9 +8,20 @@ interface ButtonProps {
   title: string;
   type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   className?: string;
+  textStyles?: string;
+  icon?: string;
+  disabled?: boolean;
 }
 
-const Button: FC<ButtonProps> = ({ clickHandler, title, type, className }) => {
+const Button: FC<ButtonProps> = ({
+  clickHandler,
+  title,
+  type,
+  className,
+  textStyles,
+  icon,
+  disabled,
+}) => {
   return (
     <button
       onClick={clickHandler}
@@ -18,7 +29,12 @@ const Button: FC<ButtonProps> = ({ clickHandler, title, type, className }) => {
       className={`custom-btn ${className}`}
       disabled={false}
     >
-      <span className={`flex-1`}>{title}</span>
+      <span className={`flex-1 ${textStyles}`}>{title}</span>
+      {icon && (
+        <div className="relative w-6 h-6">
+          <Image src={icon} alt="right icon" fill className="object-contain" />
+        </div>
+      )}
     </button>
   );
 };
