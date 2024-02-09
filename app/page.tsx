@@ -8,11 +8,18 @@ import SearchBar from '@/components/UI/SearchBar';
 import { fetchCars } from '@/utils';
 import CarCard from '@/components/CarCard';
 import { ICar } from '@/types';
+import { fuels, yearsOfProduction } from '@/constants';
 
 dotenv.config();
 
-export default async function Home() {
-  const cars: ICar[] = await fetchCars('corolla');
+export default async function Home({ searchParams }) {
+  const cars: ICar[] = await fetchCars({
+    manufacturer: searchParams.manufacturer || '',
+    year: searchParams.year || 2022,
+    fuel: searchParams.fuel || '',
+    limit: searchParams.limit || 10,
+    model: searchParams.model || '',
+  });
 
   return (
     <main className="overflow-hidden">
@@ -25,8 +32,8 @@ export default async function Home() {
         <div className="home__filters">
           <SearchBar />
           <div className="home__filter-container">
-            <Filter title="fuel" />
-            <Filter title="year" />
+            <Filter title="fuel" options={fuels} />
+            <Filter title="year" options={yearsOfProduction} />
           </div>
         </div>
 

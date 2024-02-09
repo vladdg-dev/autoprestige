@@ -1,22 +1,34 @@
-import { ICar } from '@/types';
+import { ICar, IFilter } from '@/types';
 
 const url: string = process.env.RAPID_API_URL!;
 const apiKey: string = process.env.RAPID_API_KEY!;
 const host: string = process.env.RAPID_API_HOST!;
 
-export const fetchCars = async (model: string) => {
+export const fetchCars = async (filters: IFilter) => {
+  const { manufacturer, year, model, limit, fuel } = filters;
+
   try {
-    const response = await fetch(`${url}?model=${model}`, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': apiKey,
-        'X-RapidAPI-Host': host,
+    const response = await fetch(
+      `${url}?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
+      {
+        method: 'GET',
+        headers: {
+          'X-RapidAPI-Key': apiKey,
+          'X-RapidAPI-Host': host,
+        },
       },
-    });
+    );
     return response.json();
   } catch (error) {
     console.error(error);
   }
+};
+
+export const updateSearchParams = (type: string, value: string) => {
+  const searchParams = new URLSearchParams(window.location.search);
+  searchParams.set(type, value);
+
+  return `${window.location.pathname}?${searchParams.toString()}`;
 };
 
 export const generateCarImageUrl = (car: ICar, angle?: string) => {

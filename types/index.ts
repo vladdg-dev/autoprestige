@@ -12,3 +12,11 @@ export interface ICar {
   transmission: string;
   year: number;
 }
+
+export interface IFilter {
+  manufacturer: string;
+  year: number;
+  fuel: string;
+  limit: number;
+  model: string;
+}
