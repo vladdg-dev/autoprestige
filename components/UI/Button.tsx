@@ -6,14 +6,15 @@ import { ButtonHTMLAttributes, FC, MouseEventHandler, ReactNode } from 'react';
 interface ButtonProps {
   clickHandler?: MouseEventHandler<HTMLButtonElement>;
   title: string;
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
   className?: string;
 }
 
-const Button: FC<ButtonProps> = ({ clickHandler, title, className }) => {
+const Button: FC<ButtonProps> = ({ clickHandler, title, type, className }) => {
   return (
     <button
       onClick={clickHandler}
-      type={`button`}
+      type={type}
       className={`custom-btn ${className}`}
       disabled={false}
     >
