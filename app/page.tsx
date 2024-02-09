@@ -9,6 +9,7 @@ import { fetchCars } from '@/utils';
 import CarCard from '@/components/CarCard';
 import { ICar } from '@/types';
 import { fuels, yearsOfProduction } from '@/constants';
+import ShowMore from '@/components/ShowMore';
 
 dotenv.config();
 
@@ -44,6 +45,10 @@ export default async function Home({ searchParams }) {
                 <CarCard key={car.model} car={car} />
               ))}
             </div>
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={(searchParams.limit || 10) > cars.length}
+            />
           </section>
         ) : (
           <div className="home__error-container">
