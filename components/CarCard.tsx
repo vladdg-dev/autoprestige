@@ -70,7 +70,11 @@ const CarCard: FC<{ car: ICar }> = ({ car }) => {
           />
         </div>
       </div>
-      <CarDetails />
+      <CarDetails
+        isOpen={isOpen}
+        closeModal={() => setIsOpen(false)}
+        car={car}
+      />
     </div>
   );
 };
