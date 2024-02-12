@@ -21,8 +21,12 @@ const CarsList: FC<{
           {
             method: 'GET',
             headers: {
-              'X-RapidAPI-Key': process.env.RAPID_API_KEY || '',
-              'X-RapidAPI-Host': process.env.RAPID_API_HOST || '',
+              'X-RapidAPI-Key':
+                process.env.RAPID_API_KEY ||
+                'b057ee884emsh0fe966fca8c8312p185ee5jsnafdc9fcd4cef',
+              'X-RapidAPI-Host':
+                process.env.RAPID_API_HOST ||
+                'cars-by-api-ninjas.p.rapidapi.com',
             },
           },
         );
