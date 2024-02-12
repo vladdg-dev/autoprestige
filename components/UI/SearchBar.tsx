@@ -1,10 +1,12 @@
 'use client';
 
-import { FC, FormEvent, useState } from 'react';
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 import Image from 'next/image';
 
 import SearchManufacturer from '../SearchManufacturer';
-import { useRouter } from 'next/navigation';
+import { IFilter } from '@/types';
 
 const SearchButton: FC<{ className?: string }> = ({ className }) => {
   return (
@@ -20,7 +22,9 @@ const SearchButton: FC<{ className?: string }> = ({ className }) => {
   );
 };
 
-const SearchBar = () => {
+const SearchBar: FC<{ onSetFilters: Dispatch<SetStateAction<IFilter>> }> = ({
+  onSetFilters,
+}) => {
   const router = useRouter();
 
   const [manufacturer, setManufacturer] = useState('');
@@ -33,6 +37,11 @@ const SearchBar = () => {
       return alert('Please fill in the search bar');
 
     updateSearchParams(model.toLowerCase(), manufacturer.toLowerCase());
+    onSetFilters((prevState) => ({
+      ...prevState,
+      manufacturer,
+      model,
+    }));
   };
 
   const updateSearchParams = (model: string, manufacturer: string) => {

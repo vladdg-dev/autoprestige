@@ -1,28 +1,34 @@
 'use client';
 
-import { FC, Fragment, useState } from 'react';
+import { Dispatch, FC, Fragment, SetStateAction, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Listbox, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { updateSearchParams } from '@/utils';
+import { IFilter } from '@/types';
 
 interface FilterProps {
   title: string;
-  options: [
-    {
-      title: string;
-      value: string;
-    },
-  ];
+  options: {
+    title: string;
+    value: string;
+  }[];
+  onSetFilters: Dispatch<SetStateAction<IFilter>>;
 }
 
-const Filter: FC<FilterProps> = ({ title, options }) => {
+const Filter: FC<FilterProps> = ({ title, options, onSetFilters }) => {
   const router = useRouter();
 
   const [selected, setSelected] = useState(options[0]);
 
   const handleUpdateParams = (event: { title: string; value: string }) => {
     const newPathName = updateSearchParams(title, event.value.toLowerCase());
+
+    const updatedValue = title === 'year' ? +event.value : event.value;
+    onSetFilters((prevState) => ({
+      ...prevState,
+      [title]: updatedValue,
+    }));
 
     router.push(newPathName, { scroll: false });
   };
