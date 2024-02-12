@@ -13,7 +13,6 @@ const CarsList: FC<{
 
   const { manufacturer, year, model, limit, fuel } = filters;
 
-  const url = process.env.RAPID_API_URL;
   const key = process.env.RAPID_API_KEY;
   const host = process.env.RAPID_API_HOST;
 
@@ -21,7 +20,7 @@ const CarsList: FC<{
     const fetchCars = async () => {
       try {
         const response = await fetch(
-          `${url}?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
+          `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars?make=${manufacturer}&year=${year}&model=${model}&limit=${limit}&fuel_type=${fuel}`,
           {
             method: 'GET',
             headers: {
@@ -39,7 +38,7 @@ const CarsList: FC<{
 
     const timeoutId = setTimeout(fetchCars, 500);
     return () => clearTimeout(timeoutId);
-  }, [manufacturer, year, model, limit, fuel, host, key, url]);
+  }, [manufacturer, year, model, limit, fuel, host, key]);
 
   return (
     <>
