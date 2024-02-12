@@ -13,9 +13,6 @@ const CarsList: FC<{
 
   const { manufacturer, year, model, limit, fuel } = filters;
 
-  const key = process.env.RAPID_API_KEY;
-  const host = process.env.RAPID_API_HOST;
-
   useEffect(() => {
     const fetchCars = async () => {
       try {
@@ -24,8 +21,8 @@ const CarsList: FC<{
           {
             method: 'GET',
             headers: {
-              'X-RapidAPI-Key': key as string,
-              'X-RapidAPI-Host': host as string,
+              'X-RapidAPI-Key': process.env.RAPID_API_KEY || '',
+              'X-RapidAPI-Host': process.env.RAPID_API_HOST || '',
             },
           },
         );
@@ -38,7 +35,7 @@ const CarsList: FC<{
 
     const timeoutId = setTimeout(fetchCars, 500);
     return () => clearTimeout(timeoutId);
-  }, [manufacturer, year, model, limit, fuel, host, key]);
+  }, [manufacturer, year, model, limit, fuel]);
 
   return (
     <>
@@ -60,7 +57,7 @@ const CarsList: FC<{
                 ? parseInt(searchParams.get('limit')!, 10) > cars.length
                 : false
             }
-            onSetFilters={onSetFilters} // Unchanged
+            onSetFilters={onSetFilters}
           />
         </section>
       ) : (
